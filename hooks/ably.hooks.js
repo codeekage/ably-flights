@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { ably } from '../env'
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
 
 export const useAblyChannel = (channel, dependencies) => {
   //set HUB_STREAM  channel
@@ -8,7 +10,6 @@ export const useAblyChannel = (channel, dependencies) => {
     '[product:ably-flightradar24/heathrow-flights]flights:airport:LHR'
 
   //const netInfo = useNetInfo()
-
 
   const [onMessage, setOnMessage] = useState('Please wait..')
 
@@ -37,4 +38,26 @@ export const useAblyChannel = (channel, dependencies) => {
   }, [])
 
   return [isConnected, isLoading, onMessage, channelData]
+}
+
+export const geoLocationHook = dependencies => {
+  const [geoLoading, setGeoLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [location, setLocation] = useState(null)
+
+  useEffect(() => {
+    Permissions.askAsync(Permissions.LOCATION)
+      .then(status => {
+        Location.getCurrentPositionAsync({}).then(_location => {
+          setLocation(_location)
+          setGeoLoading(false)
+        })
+      })
+      .catch(err => {
+        setErrorMessage(err)
+      })
+  }, dependencies)
+
+  //console.log()
+  return [location, geoLoading, errorMessage]
 }

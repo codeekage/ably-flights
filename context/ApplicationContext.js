@@ -36,7 +36,7 @@ export default ApplicationContext = ({ children }) => {
       useChannel.off()
       useChannel.unsubscribe()
       setArrivalsData(null)
-     // setIsLoading(true)
+      // setIsLoading(true)
     } else {
       console.log(`This ${iATA} was clicked`)
       useChannel.subscribe(arrivalListener)
@@ -64,8 +64,8 @@ export default ApplicationContext = ({ children }) => {
         departures,
         isLoading,
         setIsLoading,
-        setArrivals: setArrivals,
-        setDepartures: setDepartures
+        setArrivals,
+        setDepartures
       }}
     >
       {children}

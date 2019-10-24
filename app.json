@@ -26,6 +26,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "description": "Ably Realtime Heathrow Flight Hub Stream Mobile Application ",
+    "githubUrl": "https://github.com/codeekage/ably-flights.git"
   }
 }

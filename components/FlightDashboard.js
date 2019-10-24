@@ -16,25 +16,36 @@ const coordinates = []
 let map
 export default FlightDashboard = ({ handleClose, data }) => {
   const handleOnLayout = () => {
-    map.fitToSuppliedMarkers('flight', {
+    map.fitToCoordinates([{ latitude: data.lat, longitude: data.long }], {
       edgePadding: {
-        bottom: 200,
-        right: 50,
-        top: 150,
-        left: 50
+        bottom: 10,
+        right: 10,
+        top: 10,
+        left: 10
       },
       animated: true
     })
   }
   useEffect(() => {
-    console.log(coordinates)
     coordinates.push({ latitude: data.lat, longitude: data.long })
+    /*   setTimeout(
+      () =>
+        map.fitToSuppliedMarkers('flight', {
+          edgePadding: {
+            bottom: 10,
+            right: 10,
+            top: 10,
+            left: 10
+          },
+          animated: true
+        }),
+      1000
+    ) */
   }, [data])
 
   return (
     <View style={styles.container}>
       <MapView
-        onLayout={() => handleOnLayout()}
         ref={ref => (map = ref)}
         provider={PROVIDER_GOOGLE}
         style={styles.map_view}
@@ -44,6 +55,7 @@ export default FlightDashboard = ({ handleClose, data }) => {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA
         }}
+        mapType="mutedStandard"
       >
         {coordinates.length > 0 && (
           <>
@@ -53,7 +65,11 @@ export default FlightDashboard = ({ handleClose, data }) => {
               pinColor="#FFF"
               tracksViewChanges={true}
             >
-              <Ionicons name="ios-airplane" size={40}  style={{ transform: [{ rotateZ: '-50deg'}] }}/>
+              <Ionicons
+                name="ios-airplane"
+                size={40}
+                style={{ transform: [{ rotateZ: '-200deg' }] }}
+              />
             </Marker>
             <Polyline
               coordinates={[...coordinates]}
