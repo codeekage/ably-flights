@@ -11,6 +11,7 @@ import ArrivalScreen from '../screens/ArrivalScreen'
 import DepartureScreen from '../screens/DepartureScreen'
 import PopModal from '../components/PopModal'
 import FlightMapScreen from '../screens/FlightMapScreen'
+import SearchModal from '../components/SearchModal'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -80,6 +81,7 @@ const ArrivalStack = createStackNavigator(
   {
     Arrivals: ArrivalScreen,
     PopModal: PopModal,
+    Search: SearchModal,
     FlightMap: FlightMapScreen
   },
   {
@@ -109,6 +111,7 @@ const DepartureStack = createStackNavigator(
   {
     Departure: DepartureScreen,
     PopModal: PopModal,
+    Search: SearchModal,
     FlightMap: FlightMapScreen
   },
   {
@@ -122,7 +125,6 @@ DepartureStack.navigationOptions = ({ navigation }) => {
 DepartureScreen.path = ''
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
   ArrivalStack,
   DepartureStack
 })

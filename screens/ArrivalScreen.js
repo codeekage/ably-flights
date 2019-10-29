@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { ListCards } from '../components/ListCards'
-import { Container, Content } from 'native-base'
+import { Container, Content, Fab, Icon, Button } from 'native-base'
 import { useAblyChannel } from '../hooks/ably.hooks'
 
-export default ArrivalScreen = props => {
+export default ArrivalScreen = ({ navigation }) => {
+  const [active, setActive] = useState(false)
   const [
     isConnecting,
     isLoading,
@@ -14,7 +15,6 @@ export default ArrivalScreen = props => {
 
   const Arrivals = channelData
     ? channelData.map((item, index) => {
-        // console.log(channelData)
         return (
           <ListCards
             key={index}
@@ -22,7 +22,7 @@ export default ArrivalScreen = props => {
             icon="ios-airplane"
             //action={() => setArrivals(`${item.iataId}`)}
             action={() =>
-              props.navigation.navigate('PopModal', {
+              navigation.navigate('PopModal', {
                 iataId: item.iataId,
                 action: 'arrival'
               })
@@ -38,14 +38,32 @@ export default ArrivalScreen = props => {
       {isLoading ? (
         <LoadingScreen message={displayMessqage} />
       ) : (
-        <Content>{Arrivals}</Content>
+        <>
+          <Content>{Arrivals}</Content>
+          <Fab
+            active={active}
+            direction="up"
+            containerStyle={{}}
+            style={{ backgroundColor: '#000' }}
+            position="bottomRight"
+            onPress={() =>
+              navigation.navigate('Search', {
+                data: channelData,
+                type: 'arrival',
+                rotate: true
+              })
+            }
+          >
+            <Icon name="search" />
+          </Fab>
+        </>
       )}
     </Container>
   )
 }
 
 ArrivalScreen.navigationOptions = {
-  title: 'Arrivals to London',
+  title: 'Arrivals to London'
 }
 
 const styles = StyleSheet.create({

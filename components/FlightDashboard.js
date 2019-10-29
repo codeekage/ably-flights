@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get('window')
 
 const ASPECT_RATIO = width / height
 
-const LATITUDE_DELTA = 0.0922
+const LATITUDE_DELTA = 0.0022
 const LONGITUDE_DELTA = 0.0421
 
 const coordinates = []
@@ -81,11 +81,11 @@ export default FlightDashboard = ({ handleClose, data }) => {
       </MapView>
       <View style={styles.dashboarWrap}>
         <View style={styles.dashboard}>
-          <ListIcons icon="ios-airplane" text={data.airline} />
-          <ListIcons icon="ios-trending-up" text={data.long} />
-          <ListIcons icon="ios-speedometer" text={data.speed} />
-          <ListIcons icon="ios-trending-down" text={data.lat} />
-          <ListIcons icon="ios-flash" text={data.iataId} />
+          <ListIcons icon="ios-airplane" text={data.airline} label="AIRL" />
+          <ListIcons icon="ios-trending-up" text={data.long} label="LNG" />
+          <ListIcons icon="ios-speedometer" text={data.speed} label="Speed"/>
+          <ListIcons icon="ios-trending-down" text={data.lat} label="LAT" />
+          <ListIcons icon="ios-flash" text={data.iataId} label="IATAID" />
         </View>
         <Button
           onPress={() => handleClose()}
