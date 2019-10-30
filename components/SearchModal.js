@@ -19,7 +19,7 @@ export default SearchModal = ({ navigation }) => {
 
   const searchFlights = keyword => {
     const item = data.find(element => element.iataId === keyword)
-    const renderList =
+    const renderSearch =
       item !== undefined ? (
         <ListCards
           text={`${item.origin} - ${item.destination} (${item.iataId})`}
@@ -38,7 +38,7 @@ export default SearchModal = ({ navigation }) => {
         </View>
       )
     console.log(keyword, item)
-    setSearchContent(renderList)
+    setSearchContent(renderSearch)
   }
 
   const handleCancel = () => {

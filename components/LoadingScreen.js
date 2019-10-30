@@ -7,24 +7,14 @@ export default LoadingScreen = ({ message }) => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="#000" />
-      <Text style={styles.welcome}>{message}</Text>
+      <Text style={styles.message}>{message}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  /*   container: {
-    flex: 1,
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000',
-    color: '#000',
-    width : width,
-    height: height
-  }, */
-  welcome: {
-    fontSize: 12,
+  message: {
+    fontSize: 16,
     textAlign: 'center',
     margin: 10
   },

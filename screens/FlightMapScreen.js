@@ -1,9 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { Card, CardItem, Body, Button, Container, Content } from 'native-base'
 import context from '../context/context'
-
 import FlightDashboard from '../components/FlightDashboard'
 
 export default FlightMapScreen = ({ navigation }) => {
@@ -11,10 +7,8 @@ export default FlightMapScreen = ({ navigation }) => {
     arrivals,
     departures,
     setArrivals,
-    setDepartures,
-    setIsLoading
+    setDepartures
   } = useContext(context)
-  let data = arrivals || departures
 
   const handleClose = () => {
     arrivals
@@ -28,7 +22,6 @@ export default FlightMapScreen = ({ navigation }) => {
       arrivals
         ? setArrivals(arrivals.iataId, 'reset')
         : setDepartures(departures.iataId, 'reset')
-      //setIsLoading(true)
     }
   }, [])
 
@@ -46,13 +39,3 @@ export default FlightMapScreen = ({ navigation }) => {
 FlightMapScreen.navigationOptions = {
   header: null
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  map_view: {
-    ...StyleSheet.absoluteFillObject
-  }
-})

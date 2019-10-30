@@ -11,50 +11,39 @@ export default ApplicationContext = ({ children }) => {
 
   const [departures, setDeparturesData] = useState(null)
 
+  const setChannel = iATA => {
+    console.log(`This ${iATA} was clicked`)
+    return ably.channels.get(`${HUB_STREAM}:${iATA}`)
+  }
+
   const departureListener = message => {
     console.log('Still Listening Departure', message.data)
-    if (message.data) {
-      console.log('Current Departure  State', departures)
-      setIsLoading(false)
-      setDeparturesData(message.data)
-    }
+    message.data && setIsLoading(false) || setDeparturesData(message.data)
   }
 
   const arrivalListener = message => {
     console.log('Still Listening', message.data)
-    if (message.data) {
-      console.log('Current Arrival State', arrivals)
-      setIsLoading(false)
-      setArrivalsData(message.data)
-    }
+    message.data && setIsLoading(false) || setArrivalsData(message.data)
+  }
+
+  const unsubscribe = (useChannel, type) => {
+    console.log(`unmounting sub ${type}`)
+    useChannel.off()
+    useChannel.unsubscribe()
+    type === 'arrival' ? setArrivalsData(null) : setDeparturesData(null)
+    setIsLoading(true)
   }
 
   const setArrivals = (iATA, action) => {
-    const useChannel = ably.channels.get(`${HUB_STREAM}:${iATA}`)
-    if (action === 'reset') {
-      console.log(`${iATA} unmounting`)
-      useChannel.off()
-      useChannel.unsubscribe()
-      setArrivalsData(null)
-      // setIsLoading(true)
-    } else {
-      console.log(`This ${iATA} was clicked`)
-      useChannel.subscribe(arrivalListener)
-    }
+    action === 'reset'
+      ? unsubscribe(setChannel(iATA), 'arrival')
+      : setChannel(iATA).subscribe(arrivalListener)
   }
 
   const setDepartures = (iATA, action) => {
-    const useChannel = ably.channels.get(`${HUB_STREAM}:${iATA}`)
-    if (action === 'reset') {
-      console.log(`${iATA} unmounting`)
-      useChannel.off()
-      useChannel.unsubscribe()
-      setDeparturesData(null)
-      setIsLoading(true)
-    } else {
-      console.log(`This ${iATA} was clicked`)
-      useChannel.subscribe(departureListener)
-    }
+    action === 'reset'
+      ? unsubscribe(setChannel(iATA), 'departure')
+      : setChannel(iATA).subscribe(departureListener)
   }
 
   return (

@@ -8,7 +8,6 @@ export default PopModal = ({ navigation }) => {
     setArrivals,
     isLoading,
     arrivals,
-    setIsLoading,
     departures,
     setDepartures
   } = useContext(ApplicationContext)
@@ -19,8 +18,9 @@ export default PopModal = ({ navigation }) => {
   useEffect(() => {
     return () => {
       reset = false
-      setArrivals(`${iataId}`, 'reset')
-      setDepartures(`${iataId}`, 'reset')
+      action === 'arrival'
+        ? setArrivals(`${iataId}`, 'reset')
+        : setDepartures(`${iataId}`, 'reset')
       navigation.setParams({ action: 'reset' })
     }
   }, [])

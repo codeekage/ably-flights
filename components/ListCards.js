@@ -1,14 +1,10 @@
-import React, {useContext} from 'react'
-import { Card, CardItem, Body, Text, Left, Right } from 'native-base'
+import React from 'react'
+import { Card, CardItem, Body, Text, Left } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
-import AppContext from '../context/context'
 
-export const ListCards = ({ text, rotate, icon, action }) => {
+export const ListCards = ({ text, rotate, action }) => {
   const deg = rotate ? '45deg' : '-45deg'
   const color = rotate ? '#dbd81d' : '#7cbf80'
-
-
- //const context = useContext(AppContext);
 
   const handleActions = action => {
     action()
@@ -32,10 +28,6 @@ export const ListCards = ({ text, rotate, icon, action }) => {
     </Card>
   )
 }
-
-// function handleActions(action) {
-//   action()
-// }
 
 //#c27e7e
 //#7cbf80
